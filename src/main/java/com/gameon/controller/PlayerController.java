@@ -3,6 +3,8 @@ package com.gameon.controller;
 import com.gameon.Exception.ResourceNotFoundException;
 import com.gameon.entity.Player;
 import com.gameon.repository.PlayerRepository;
+import com.gameon.service.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,12 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/players")
+@RequiredArgsConstructor
 public class PlayerController {
     @Autowired
     PlayerRepository playerRepository;
+
+    private final AuthenticationService service;
 
     @GetMapping
     public List<Player> getAllPlayers() {
@@ -60,4 +65,20 @@ public class PlayerController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+    @PostMapping("/auth/register")
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody RegisterRequest request
+    ) {
+        return ResponseEntity.ok(service.register(request));
+    }
+
+    @PostMapping("/auth/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticationRequest request
+    ) {
+        return ResponseEntity.ok(service.authenticate(request));
+    }
+
 }

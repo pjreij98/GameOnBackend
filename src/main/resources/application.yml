@@ -4,6 +4,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/paul_springboot
+    driver-class-name: org.postgresql.Driver
     username: postgres
     password: Sam941226!
   jpa:
@@ -14,5 +15,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   main:
     web-application-type: SERVLET
